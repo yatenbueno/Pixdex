@@ -25,8 +25,7 @@ function CajaJuegos({ backgroundColor, text, descripcion }: CajaJuegosProps) {
         </View>
 
         {/* Botón */}
-        <Link
-          href={ROUTES.AHORCADO_INICIAL}>
+        <Link href={ROUTES.AHORCADO_INICIAL}>
           <View style={styles.actionContainer}>
             <Text style={styles.buttonText}>Jugar</Text>
           </View>

@@ -3,6 +3,7 @@ import { BotonBack } from "@/components/BotonBack";
 import ModalAhorcado from "@/components/ModalAhorcado";
 import ModalGenerico from "@/components/ModalGenerico";
 import colors from "@/constants/Colors";
+import { ROUTES } from "@/src/navigation/routes";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -32,38 +33,34 @@ export default function Ahorcado() {
     cargarNombre();
   }, []);
 
-  // const iniciarJuego = () => {
-  //   if (!nombreJugador) {
-  //     setModalVisible(true);
-  //   } else {
-  //     // Aquí podrías agregar lógica para iniciar el juego
-  //     console.log("Iniciando juego para:", nombreJugador);
-  //   }
-  // };
+  const iniciarJuego = async (nombre: string) => {
+    await AsyncStorage.setItem("nombreJugador", nombre);
+    setModalVisible(false);
+    router.push(ROUTES.AHORCADO);
+  };
 
   return (
     <View style={styles.container}>
       <BotonBack/>
+
       <View style={styles.borde}>
         <Text style={styles.slugTitle}>Juego del ahorcado</Text>
         <Text style={styles.description}>
           Adivina los títulos de shows de TV, películas y anime una letra a la
           vez. Tienes 5 vidas - ¿Podes obtener el puntaje máximo?
         </Text>
+
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Boton texto="INICIAR JUEGO"/>
         </TouchableOpacity>
       </View>
 
-      <ModalGenerico
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      >
+      <ModalGenerico visible={modalVisible} onClose={() => setModalVisible(false)}>
         <ModalAhorcado
-          onStart={(nombre) => {
-            setNombreJugador(nombre);
-            setModalVisible(false);
-          }}
+          onStart={(iniciarJuego)}
+          texto="Enter Your Name"
+          textoBoton="INICIAR JUEGO"
+          placeHolder="Nombre del jugador"
         />
       </ModalGenerico>
     </View>

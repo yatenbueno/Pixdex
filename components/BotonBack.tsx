@@ -3,21 +3,33 @@ import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import Boton from "./Boton";
 
-export const BotonBack = () => {
+type BotonBackProps = {
+  texto?: string;
+};
+
+export const BotonBack = ({ texto = "BACK" }: BotonBackProps) => {
   const router = useRouter();
   const navigation = useNavigation();
 
   const handleBack = () => {
-    if (navigation.canGoBack()) {
+    if (texto === "EXIT") {
+      router.replace("/"); // Va a home y limpia el historial
+    } else if (navigation.canGoBack()) {
       router.back();
     } else {
-      router.replace("/"); 
+      router.replace("/");
     }
   };
+
   return (
     <TouchableOpacity onPress={handleBack}>
       <View style={{ alignSelf: "flex-start" }}>
-        <Boton texto="BACK" icono="arrow-back"></Boton>
+        <Boton
+          texto={texto}
+          icono="arrow-back"
+          styleContainer={{ paddingHorizontal: 0 }}
+          styleIcon={{ marginRight: 6 }}
+        ></Boton>
       </View>
     </TouchableOpacity>
   );

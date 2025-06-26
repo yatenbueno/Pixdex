@@ -1,8 +1,5 @@
 import colors from '@/constants/Colors';
 import { Texto } from '@/constants/FuenteProvider';
-import { ROUTES } from '@/src/navigation/routes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -13,36 +10,38 @@ import {
 import Boton from './Boton';
 
 type AhorcadoProps = {
-  onStart: (nombre: string) => void;
+  onStart: (valor: string) => void;
+  texto?: string;
+  textoBoton: string;
+  placeHolder: string;
+  valorDefault?: string;
 };
 
-const ModalAhorcado = ({ onStart }: AhorcadoProps) => {
-  const [nombreJugador, setNombreJugador] = useState('');
-  const router = useRouter();
-
-  const handleStart = async () => {
-    if (nombreJugador.trim() !== '') {
-      const nombre = nombreJugador.trim();
-      await AsyncStorage.setItem('nombreJugador', nombre); // Guardar
-      onStart(nombre);
-      router.push(ROUTES.AHORCADO); 
+const ModalAhorcado = ({ onStart, texto, textoBoton, placeHolder, valorDefault = "" }: AhorcadoProps) => {
+  const [valor, setValor] = useState(valorDefault);
+  
+  const handlePress = () => {
+    if (valor.trim()) {
+      onStart(valor.trim());
     }
   };
 
   return (
     <View style={styles.modal}>
-      <Texto style={styles.titulo}>Ingresa tu nombre</Texto>
+      <Texto style={styles.titulo}>{texto}</Texto>
 
       <TextInput
         style={styles.input}
-        placeholder="Nombre del jugador"
+        placeholder={placeHolder}
         placeholderTextColor="#aaa"
-        value={nombreJugador}
-        onChangeText={setNombreJugador}
+        value={valor}
+        onChangeText={setValor}
       />
-      <TouchableOpacity onPress={handleStart}>
-        <Boton texto='INICIAR JUEGO'></Boton>
-      </TouchableOpacity>
+      <View style={styles.boton}>
+        <TouchableOpacity onPress={handlePress}>
+          <Boton texto={textoBoton}></Boton>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -52,13 +51,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.fondo,
     padding: 20,
     borderRadius: 12,
-    alignItems: "center",
   },
   titulo: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: "PixelFont",
     color: colors.blanco,
-    textAlign: "center",
+    textAlign: "left",
     marginBottom: 12,
   },
   input: {
@@ -73,24 +71,9 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 20,
   },
-  botones: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "100%",
-  },
   boton: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  aplicar: {
-    backgroundColor: colors.purpura,
-  },
-  textoBoton: {
-    color: "white",
-    fontSize: 12,
-    fontFamily: "PixelFont",
-  },
+    alignSelf: "flex-end"
+  }
 });
 
 export default ModalAhorcado;

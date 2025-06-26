@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '48%',
     marginBottom: 15,
+    marginLeft: 5,
   },
   generosGrid: {
     flexDirection: 'row',
