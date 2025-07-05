@@ -1,37 +1,40 @@
 import Boton from "@/components/Boton";
 import { BotonBack } from "@/components/BotonBack";
-import ModalAhorcado from "@/components/ModalAhorcado";
+import ModalLetra from "@/components/ModalAhorcadoLetra";
+import ModalAhorcado from "@/components/ModalAhorcadoNombre";
 import ModalGenerico from "@/components/ModalGenerico";
 import colors from "@/constants/Colors";
 import { obtenerContenidoAleatorio } from "@/services/apiContenido";
 import { ContenidoAudiovisual } from "@/src/data/contenidosAudiovisuales";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 import {
   Alert,
   Image,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View
 } from "react-native";
+import { Texto } from "@/constants/FuenteProvider";
 
 export default function Ahorcado() {
-  // const navigation = useNavigation();
-  // const router = useRouter();
-  const [modalAdivinarVisible, setModalAdivinarVisible] = useState(false);
+  const [modalAdivinarNombreVisible, setModalAdivinarNombreVisible] =
+    useState(false);
+  const [modalLetraVisible, setModalLetraVisible] = useState(false);
   const [vidas, setVidas] = useState(5);
   const [puntos, setPuntos] = useState(0);
   const [contenidoActual, setContenidoActual] =
     useState<ContenidoAudiovisual | null>(null);
-  const [letrasAdivinadas, setLetrasAdivinadas] = useState<string[]>([]);
+  const [letrasAdivinadas, setLetrasAdivinadas] = useState<Set<string>>(
+    new Set()
+  );
   const [juegoTerminado, setJuegoTerminado] = useState(false);
-  const [inputLetra, setInputLetra] = useState("");
-  // const [inputNombre, setInputNombre] = useState("");
   const [nombreJugador, setNombreJugador] = useState<string | null>(
     "Nombre del jugador"
-  ); // Reemplazar con props/param
+  );
+  const router = useRouter();
 
   useEffect(() => {
     if (!contenidoActual) {
@@ -43,10 +46,13 @@ export default function Ahorcado() {
     try {
       const contenido = await obtenerContenidoAleatorio();
       setContenidoActual(contenido);
-      setLetrasAdivinadas([]);
+      setLetrasAdivinadas(new Set()); // reiniciar letras SOLO al cargar nueva peli
     } catch (error) {
       console.error("Error al cargar el contenido:", error);
-      Alert.alert("Error", "No se pudo cargar el contenido. Intenta nuevamente.");
+      Alert.alert(
+        "Error",
+        "No se pudo cargar el contenido. Intenta nuevamente."
+      );
     }
   };
 
@@ -55,32 +61,35 @@ export default function Ahorcado() {
       .split("")
       .map((letra) => {
         if (letra === " ") return " ";
-        return letrasAdivinadas.includes(letra.toLowerCase()) ? letra : "_";
+        return letrasAdivinadas.has(letra.toLowerCase()) ? letra : "_";
       })
       .join(" ");
   };
 
-  const adivinarLetra = () => {
-    const letra = inputLetra.toLowerCase();
-    if (!letra || letra.length !== 1) return;
+  const adivinarLetra = (letra: string) => {
+    if (vidas <= 0 || juegoTerminado) return;
+    const letraLower = letra.toLowerCase();
+    if (!letraLower || letraLower.length !== 1) return;
 
     const nombre = contenidoActual?.nombre.toLowerCase() ?? "";
-    if (nombre.includes(letra)) {
-      setLetrasAdivinadas((prev) => [...prev, letra]);
+    const nuevasLetras = new Set(letrasAdivinadas);
+    nuevasLetras.add(letraLower);
+    setLetrasAdivinadas(nuevasLetras);
+
+    if (nombre.includes(letraLower)) {
       const todasAdivinadas = nombre
         .split("")
-        .every((l) => letrasAdivinadas.includes(l) || l === letra);
+        .every((l) => l === " " || nuevasLetras.has(l));
 
       if (todasAdivinadas) {
         setPuntos((prev) => prev + 1);
-        cargarContenidoNuevo();
+        setContenidoActual(null);
       }
     } else {
       const nuevasVidas = vidas - 1;
       setVidas(nuevasVidas);
       if (nuevasVidas === 0) setJuegoTerminado(true);
     }
-    setInputLetra("");
   };
 
   const adivinarNombre = (inputNombre: string) => {
@@ -92,7 +101,7 @@ export default function Ahorcado() {
       setVidas(nuevasVidas);
       if (nuevasVidas === 0) setJuegoTerminado(true);
     }
-    setModalAdivinarVisible(false);
+    setModalAdivinarNombreVisible(false);
   };
 
   return (
@@ -115,18 +124,12 @@ export default function Ahorcado() {
       </View>
       <View style={styles.borde}>
         <View style={styles.botones}>
-          <TouchableOpacity onPress={() => setModalAdivinarVisible(true)}>
-            <Boton
-              texto="ADIVINAR NOMBRE"
-              styleTexto={{ fontSize: 8.5 }}
-            ></Boton>
+          <TouchableOpacity onPress={() => setModalAdivinarNombreVisible(true)}>
+            <Boton texto="ADIVINAR NOMBRE" styleTexto={{ fontSize: 8.5 }} />
           </TouchableOpacity>
-          
-          <TouchableOpacity>
-            <Boton
-              texto="ADIVINAR LETRA"
-              styleTexto={{ fontSize: 8.5 }}
-            ></Boton>
+
+          <TouchableOpacity onPress={() => setModalLetraVisible(true)}>
+            <Boton texto="ADIVINAR LETRA" styleTexto={{ fontSize: 8.5 }} />
           </TouchableOpacity>
         </View>
         <View style={styles.centro}>
@@ -139,26 +142,56 @@ export default function Ahorcado() {
           <Text style={styles.palabra}>
             {renderPalabra()} {contenidoActual?.nombre}
           </Text>
-
-          <TextInput
-            placeholder="Letra"
-            value={inputLetra}
-            onChangeText={setInputLetra}
-            style={styles.input}
-            maxLength={1}
-          />
         </View>
       </View>
       <ModalGenerico
-        visible={modalAdivinarVisible}
-        onClose={() => setModalAdivinarVisible(false)}
+        visible={modalAdivinarNombreVisible}
+        onClose={() => setModalAdivinarNombreVisible(false)}
       >
         <ModalAhorcado
           onStart={adivinarNombre}
           texto="Adivina el título"
           textoBoton="ADIVINAR"
           placeHolder="Escribe el título completo"
-      />
+        />
+      </ModalGenerico>
+
+      <ModalGenerico
+        visible={modalLetraVisible}
+        onClose={() => setModalLetraVisible(false)}
+      >
+        <ModalLetra
+          letrasUsadas={[...letrasAdivinadas]} // convertimos Set a array
+          onCancel={() => setModalLetraVisible(false)}
+          onConfirm={(letra) => {
+            adivinarLetra(letra);
+            setModalLetraVisible(false);
+          }}
+        />
+      </ModalGenerico>
+
+      <ModalGenerico
+        visible={juegoTerminado}
+        onClose={() => {}}
+      >
+        <View style={{ alignItems: "center", gap: 15 }}>
+          <Texto style={{ fontSize: 18, color: colors.blanco, textAlign: "center" }}>
+            ¡Se acabaron tus vidas!
+          </Texto>
+
+          <TouchableOpacity
+            onPress={() => {
+              setJuegoTerminado(false);
+              setVidas(5);
+              setPuntos(0);
+              setContenidoActual(null);
+              setLetrasAdivinadas(new Set());
+              router.replace("/");
+            }}
+          >
+            <Boton texto="VOLVER AL INICIO" />
+          </TouchableOpacity>
+        </View>
       </ModalGenerico>
     </View>
   );
@@ -212,14 +245,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     letterSpacing: 4,
   },
-  input: {
-    backgroundColor: colors.blanco,
-    padding: 8,
-    width: "70%",
-    borderRadius: 8,
-    marginVertical: 5,
-    fontSize: 16,
-  },
   modal: {
     flex: 1,
     backgroundColor: "rgba(66, 35, 35, 0.8)",
@@ -227,7 +252,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
   },
-  titulo: {
+  nombre: {
     color: colors.blanco,
     fontSize: 24,
   },

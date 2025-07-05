@@ -1,6 +1,6 @@
 import Boton from "@/components/Boton";
 import { BotonBack } from "@/components/BotonBack";
-import ModalAhorcado from "@/components/ModalAhorcado";
+import ModalAhorcado from "@/components/ModalAhorcadoNombre";
 import ModalGenerico from "@/components/ModalGenerico";
 import colors from "@/constants/Colors";
 import { ROUTES } from "@/src/navigation/routes";

@@ -29,13 +29,7 @@ export function ContenidoCard({
         source={{ uri: imageUrl }}
         style={styles.image}
         imageStyle={styles.imageInner}
-      >
-        <View style={styles.overlay}>
-          <Text style={styles.imageTitle} numberOfLines={1}>
-            {nombre}
-          </Text>
-        </View>
-      </ImageBackground>
+      />
 
       {/* Info abajo */}
       <View style={styles.info}>
@@ -71,16 +65,6 @@ const styles = StyleSheet.create({
   },
   imageInner: {
     resizeMode: "cover",
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-  },
-  imageTitle: {
-    color: "white",
-    fontSize: 8,
-    fontFamily: "PixelFont",
   },
   info: {
     flex: 1,
