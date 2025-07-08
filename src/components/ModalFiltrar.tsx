@@ -1,10 +1,16 @@
-import colors from '@/constants/Colors';
-import { Texto } from '@/constants/FuenteProvider';
-import { generosContenidoAudiovisual } from '@/src/data/generosContenidoAudiovisual';
-import { tiposContenidoAudiovisual } from '@/src/data/tiposContenidoAudiovisual';
-import Checkbox from 'expo-checkbox';
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import colors from "@/src/common/constants/Colors";
+import { Texto } from "@/src/common/constants/FuenteProvider";
+import { generosContenidoAudiovisual } from "@/src/data/generosContenidoAudiovisual";
+import { tiposContenidoAudiovisual } from "@/src/data/tiposContenidoAudiovisual";
+import Checkbox from "expo-checkbox";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 type Props = {
   onCancelar: () => void;
@@ -73,10 +79,16 @@ const ModalFiltrar = ({ onCancelar, onAplicar, filtrosIniciales }: Props) => {
       </ScrollView>
 
       <View style={styles.botones}>
-        <TouchableOpacity onPress={onCancelar} style={[styles.boton, styles.cancelar]}>
+        <TouchableOpacity
+          onPress={onCancelar}
+          style={[styles.boton, styles.cancelar]}
+        >
           <Texto style={styles.textoBoton}>CANCELAR</Texto>
         </TouchableOpacity>
-        <TouchableOpacity onPress={aplicar} style={[styles.boton, styles.aplicar]}>
+        <TouchableOpacity
+          onPress={aplicar}
+          style={[styles.boton, styles.aplicar]}
+        >
           <Texto style={styles.textoBoton}>APLICAR </Texto>
         </TouchableOpacity>
       </View>
@@ -86,15 +98,13 @@ const ModalFiltrar = ({ onCancelar, onAplicar, filtrosIniciales }: Props) => {
 
 const styles = StyleSheet.create({
   modal: {
-    // width: '100%',
-    // maxHeight: '100%',
-    backgroundColor: colors.fondo
+    backgroundColor: colors.fondo,
   },
   titulo: {
     fontSize: 18,
     fontFamily: "PixelFont",
     color: colors.blanco,
-    textAlign: 'center',
+    textAlign: "center",
   },
   subtitulo: {
     fontSize: 13,
@@ -103,32 +113,32 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
     marginLeft: 5,
   },
   checkboxContainerGenero: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '48%',
+    flexDirection: "row",
+    alignItems: "center",
+    width: "48%",
     marginBottom: 15,
     marginLeft: 5,
   },
   generosGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   checkboxLabel: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     marginLeft: 8,
     fontSize: 10,
   },
   botones: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 11,
   },
   boton: {
@@ -141,10 +151,10 @@ const styles = StyleSheet.create({
   },
   aplicar: {
     backgroundColor: colors.purpura,
-    paddingRight: 6
+    paddingRight: 6,
   },
   textoBoton: {
-    color: 'white',
+    color: "white",
     fontSize: 11,
     paddingTop: 2,
   },

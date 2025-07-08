@@ -10,6 +10,8 @@ type CajaIndicadoraAccionesProps = {
   filtros: FiltrosSeleccionados;
   setFiltros: (filtros: FiltrosSeleccionados) => void;
   modalVisible: boolean;
+  setTiposSeleccionados: (tipos: number[]) => void;
+  setGenerosSeleccionados: (generos: number[]) => void;
   setModalVisible: (visible: boolean) => void;
 };
 
@@ -18,6 +20,8 @@ function CajaIndicadoraAcciones({
   filtros,
   setFiltros,
   modalVisible,
+  setTiposSeleccionados,
+  setGenerosSeleccionados,
   setModalVisible,
 }: CajaIndicadoraAccionesProps) {
   return (
@@ -38,7 +42,9 @@ function CajaIndicadoraAcciones({
           onCancelar={() => setModalVisible(false)}
           onAplicar={(nuevosFiltros) => {
             setFiltros(nuevosFiltros);
-            setModalVisible(false);
+            setTiposSeleccionados(nuevosFiltros.tiposSeleccionados);
+            setGenerosSeleccionados(nuevosFiltros.generosSeleccionados);
+            setModalVisible(false); // cerrar modal
           }}
         />
       </ModalGenerico>
@@ -47,3 +53,4 @@ function CajaIndicadoraAcciones({
 }
 
 export { CajaIndicadoraAcciones };
+

@@ -1,84 +1,74 @@
-import { BotonBack } from "@/components/BotonBack";
-import colors from "@/constants/Colors";
+import colors from "@/src/common/constants/Colors";
+import { BotonBack } from "@/src/components/BotonBack";
+import Etiqueta from "@/src/components/Etiqueta";
+import { AudiovisualesContext } from "@/src/context/audiovisual-context";
 import { contenidosAudiovisuales } from "@/src/data/contenidosAudiovisuales";
-import { generosContenidoAudiovisual } from "@/src/data/generosContenidoAudiovisual";
-import { tiposContenidoAudiovisual } from "@/src/data/tiposContenidoAudiovisual";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { useContext } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function ContenidoSlugRoute() {
-  const { slug } = useLocalSearchParams(); // ← Accede a /detail/LOQUESEA
-  const router = useRouter();
-  const navigation = useNavigation();
-
-  const handleBack = () => {
-    if (navigation.canGoBack()) {
-      router.back();
-    } else {
-      router.replace("/"); 
-    }
-  };
-
-  const contenido = contenidosAudiovisuales.find((item) => item.nombre === slug);
-
-  const generos = contenido?.generos.map(
-    (id) => generosContenidoAudiovisual.find((g) => g.id === id)?.nombre
+  const { slug } = useLocalSearchParams();
+  const { contenidos, generos, tipos } = useContext(AudiovisualesContext);
+  // uso el contexto
+  const contenido = contenidosAudiovisuales.find(
+    (item) => item.nombre === slug
+  );
+  const generosNombres = contenido?.generos.map(
+    (generoId) => generos.find((g) => g.id === generoId)?.nombre
   );
 
-  const tipo = tiposContenidoAudiovisual.find((t) => t.id === contenido?.tipoId)?.singular;
+  const tipoNombre = tipos.find((t) => t.id === contenido?.tipoId)?.singular;
 
   return (
-    <View style={styles.container}>
-      <BotonBack/>
-      <View style={styles.borde}>
-        <View style={styles.imagePlaceholder}>
-          <Text style={{ color: "#000", textAlign: "center" }}>{slug}</Text>
-        </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <BotonBack />
+        <View style={styles.borde}>
+          <View style={styles.imagePlaceholder}>
+            <Text style={{ color: "#000", textAlign: "center" }}>{slug}</Text>
+          </View>
 
-        <Text style={styles.slugTitle}>{contenido?.nombre}</Text>
+          <Text style={styles.slugTitle}>{contenido?.nombre}</Text>
 
-        <View style={styles.tag}>
-          <Text style={styles.tagText}>{tipo}</Text>
-        </View>
+          <View style={{ marginLeft: 20, marginBottom: 15 }}>
+            {tipoNombre && <Etiqueta texto={tipoNombre} variant="detalle" />}
+          </View>
 
-        <Text style={styles.description}>{contenido?.descripcion}</Text>
+          <Text style={styles.description}>{contenido?.descripcion}</Text>
 
-        <Text style={styles.genresTitle}>Genres</Text>
-        <View style={styles.genreList}>
-          {generos?.map((genero, index) => (
-            <Text key={index} style={styles.genre}>
-              {genero}
-            </Text>
-          ))}
+          <Text style={styles.genresTitle}>Genres</Text>
+          <View style={styles.genreList}>
+            {generosNombres?.map((genero, index) => (
+              <Etiqueta key={index} texto={genero ?? ""} variant="detalle" />
+            ))}
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
-    backgroundColor: colors.fondo,
   },
-  borde:{
-    alignSelf:"center",
-    height:790, 
-    width:390, 
-    borderWidth:3,
-    borderColor: colors.grisOscuro, 
-    marginTop:30
+  borde: {
+    alignSelf: "center",
+    width: "95%",
+    borderWidth: 3,
+    borderColor: colors.grisOscuro,
+    marginTop: 30,
+    paddingBottom: 20,
   },
   imagePlaceholder: {
-    height: "60%",
-    width: 340,
-    marginLeft:20,
-    marginTop:20,
+    height: 450,
+    width: "90%",
+    marginLeft: 20,
+    marginTop: 20,
     backgroundColor: "#BEBEBE",
     marginBottom: 20,
     justifyContent: "center",
-    alignItems: "center",
   },
   slugTitle: {
     fontSize: 20,
@@ -86,47 +76,27 @@ const styles = StyleSheet.create({
     fontFamily: "PixelFont",
     marginBottom: 10,
     lineHeight: 24,
-    marginLeft:20,
-  },
-  tag: {
-    backgroundColor: colors.grisOscuro,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    alignSelf: "flex-start",
-    marginLeft:20,
-    marginBottom: 15,
-  },
-  tagText: {
-    color: "#fff",
-    fontSize: 10,
-    alignSelf:"center"
+    marginLeft: 20,
   },
   description: {
     color: "#fff",
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 20,
-    marginLeft:20,
-    marginRight:20,
+    marginLeft: 20,
+    marginRight: 20,
   },
   genresTitle: {
     color: colors.verde,
     fontSize: 14,
     fontFamily: "PixelFont",
     marginBottom: 10,
-    marginLeft:20,
+    marginLeft: 20,
   },
   genreList: {
     flexDirection: "row",
     gap: 10,
     flexWrap: "wrap",
-    marginLeft:20,
-  },
-  genre: {
-    backgroundColor: colors.grisOscuro,
-    color: "#fff",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    fontSize: 10,
+    marginLeft: 20,
   },
 });

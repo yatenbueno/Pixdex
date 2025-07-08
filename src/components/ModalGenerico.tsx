@@ -1,11 +1,11 @@
-import colors from '@/constants/Colors';
-import React from 'react';
+import colors from "@/src/common/constants/Colors";
+import React from "react";
 import {
   Modal,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
+} from "react-native";
 
 type ModalGenericoProps = {
   visible: boolean;
@@ -24,9 +24,7 @@ const ModalGenerico = ({ visible, onClose, children }: ModalGenericoProps) => {
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.fondo}>
           <TouchableWithoutFeedback>
-            <View style={styles.contenedor}>
-              {children}
-            </View>
+            <View style={styles.contenedor}>{children}</View>
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
@@ -37,12 +35,12 @@ const ModalGenerico = ({ visible, onClose, children }: ModalGenericoProps) => {
 const styles = StyleSheet.create({
   fondo: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   contenedor: {
-    width: '85%',
+    width: "85%",
     backgroundColor: colors.fondo,
     borderRadius: 20,
     padding: 20,

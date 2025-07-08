@@ -1,27 +1,18 @@
-import Boton from "@/components/Boton";
-import { BotonBack } from "@/components/BotonBack";
-import ModalAhorcado from "@/components/ModalAhorcadoNombre";
-import ModalGenerico from "@/components/ModalGenerico";
-import colors from "@/constants/Colors";
+import colors from "@/src/common/constants/Colors";
+import Boton from "@/src/components/Boton";
+import { BotonBack } from "@/src/components/BotonBack";
+import ModalAhorcado from "@/src/components/ModalAhorcadoNombre";
+import ModalGenerico from "@/src/components/ModalGenerico";
 import { ROUTES } from "@/src/navigation/routes";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Ahorcado() {
-  const navigation = useNavigation();
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [nombreJugador, setNombreJugador] = useState<string | null>(null);
-
-  const handleBack = () => {
-    if (navigation.canGoBack()) {
-      router.back();
-    } else {
-      router.replace("/");
-    }
-  };
 
   useEffect(() => {
     const cargarNombre = async () => {
@@ -41,7 +32,7 @@ export default function Ahorcado() {
 
   return (
     <View style={styles.container}>
-      <BotonBack/>
+      <BotonBack />
 
       <View style={styles.borde}>
         <Text style={styles.slugTitle}>Juego del ahorcado</Text>
@@ -51,14 +42,17 @@ export default function Ahorcado() {
         </Text>
 
         <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Boton texto="INICIAR JUEGO"/>
+          <Boton texto="INICIAR JUEGO" />
         </TouchableOpacity>
       </View>
 
-      <ModalGenerico visible={modalVisible} onClose={() => setModalVisible(false)}>
+      <ModalGenerico
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      >
         <ModalAhorcado
-          onStart={(iniciarJuego)}
-          texto="Enter Your Name"
+          onStart={iniciarJuego}
+          texto="Ingresa tu nombre"
           textoBoton="INICIAR JUEGO"
           placeHolder="Nombre del jugador"
         />

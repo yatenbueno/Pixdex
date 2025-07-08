@@ -1,23 +1,24 @@
-import Boton from "@/components/Boton";
-import { BotonBack } from "@/components/BotonBack";
-import ModalLetra from "@/components/ModalAhorcadoLetra";
-import ModalAhorcado from "@/components/ModalAhorcadoNombre";
-import ModalGenerico from "@/components/ModalGenerico";
-import colors from "@/constants/Colors";
-import { obtenerContenidoAleatorio } from "@/services/apiContenido";
-import { ContenidoAudiovisual } from "@/src/data/contenidosAudiovisuales";
+import colors from "@/src/common/constants/Colors";
+import { Texto } from "@/src/common/constants/FuenteProvider";
+import Boton from "@/src/components/Boton";
+import { BotonBack } from "@/src/components/BotonBack";
+import ModalLetra from "@/src/components/ModalAhorcadoLetra";
+import ModalAhorcado from "@/src/components/ModalAhorcadoNombre";
+import ModalGenerico from "@/src/components/ModalGenerico";
+import { AudiovisualesContext } from "@/src/context/audiovisual-context";
+import { IContenidoAudiovisual } from "@/src/data/contenidosAudiovisuales";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { useContext, useEffect, useState } from "react";
 import {
   Alert,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
-import { Texto } from "@/constants/FuenteProvider";
 
 export default function Ahorcado() {
   const [modalAdivinarNombreVisible, setModalAdivinarNombreVisible] =
@@ -25,35 +26,56 @@ export default function Ahorcado() {
   const [modalLetraVisible, setModalLetraVisible] = useState(false);
   const [vidas, setVidas] = useState(5);
   const [puntos, setPuntos] = useState(0);
+  const { contenidos } = useContext(AudiovisualesContext);
   const [contenidoActual, setContenidoActual] =
-    useState<ContenidoAudiovisual | null>(null);
+    useState<IContenidoAudiovisual | null>(null);
+  const [contenidosDisponibles, setContenidosDisponibles] = useState<
+    IContenidoAudiovisual[]
+  >([]);
   const [letrasAdivinadas, setLetrasAdivinadas] = useState<Set<string>>(
     new Set()
   );
   const [juegoTerminado, setJuegoTerminado] = useState(false);
-  const [nombreJugador, setNombreJugador] = useState<string | null>(
-    "Nombre del jugador"
-  );
+  const [nombreJugador, setNombreJugador] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (!contenidoActual) {
+    if (contenidos.length > 0 && contenidosDisponibles.length === 0) {
+      setContenidosDisponibles([...contenidos]);
+    }
+
+    // Solo llama cuando aún no hay contenido cargado
+    if (contenidosDisponibles.length > 0 && !contenidoActual) {
       cargarContenidoNuevo();
     }
-  }, [contenidoActual]);
+  }, [contenidos, contenidosDisponibles]);
 
-  const cargarContenidoNuevo = async () => {
-    try {
-      const contenido = await obtenerContenidoAleatorio();
-      setContenidoActual(contenido);
-      setLetrasAdivinadas(new Set()); // reiniciar letras SOLO al cargar nueva peli
-    } catch (error) {
-      console.error("Error al cargar el contenido:", error);
-      Alert.alert(
-        "Error",
-        "No se pudo cargar el contenido. Intenta nuevamente."
-      );
+  useEffect(() => {
+    const obtenerNombre = async () => {
+      const nombre = await AsyncStorage.getItem("nombreJugador");
+      if (nombre) {
+        setNombreJugador(nombre);
+      }
+    };
+    obtenerNombre();
+  }, []);
+
+  const cargarContenidoNuevo = () => {
+    if (contenidosDisponibles.length === 0) {
+      Alert.alert("Fin del juego", "¡Ya adivinaste todos los contenidos!");
+      setJuegoTerminado(true);
+      return;
     }
+
+    const indice = Math.floor(Math.random() * contenidosDisponibles.length);
+    const nuevoContenido = contenidosDisponibles[indice];
+
+    setContenidoActual(nuevoContenido);
+    setLetrasAdivinadas(new Set());
+
+    const nuevosRestantes = [...contenidosDisponibles];
+    nuevosRestantes.splice(indice, 1);
+    setContenidosDisponibles(nuevosRestantes);
   };
 
   const renderPalabra = () => {
@@ -83,7 +105,7 @@ export default function Ahorcado() {
 
       if (todasAdivinadas) {
         setPuntos((prev) => prev + 1);
-        setContenidoActual(null);
+        cargarContenidoNuevo();
       }
     } else {
       const nuevasVidas = vidas - 1;
@@ -115,7 +137,7 @@ export default function Ahorcado() {
         </View>
         <View>
           <Text style={{ fontSize: 12, color: colors.blanco }}>
-            Player: {nombreJugador}
+            Player: {nombreJugador ?? "Sin nombre"}
           </Text>
           <Text style={{ fontSize: 12, color: colors.blanco }}>
             Score: {puntos}
@@ -139,9 +161,8 @@ export default function Ahorcado() {
               style={styles.imagen}
             />
           )}
-          <Text style={styles.palabra}>
-            {renderPalabra()} {contenidoActual?.nombre}
-          </Text>
+          <Text style={styles.palabra}>{renderPalabra()}</Text>
+          <Text style={styles.palabra}>{contenidoActual?.nombre}</Text>
         </View>
       </View>
       <ModalGenerico
@@ -161,7 +182,7 @@ export default function Ahorcado() {
         onClose={() => setModalLetraVisible(false)}
       >
         <ModalLetra
-          letrasUsadas={[...letrasAdivinadas]} // convertimos Set a array
+          letrasUsadas={[...letrasAdivinadas]} // conveierto Set a array
           onCancel={() => setModalLetraVisible(false)}
           onConfirm={(letra) => {
             adivinarLetra(letra);
@@ -170,12 +191,11 @@ export default function Ahorcado() {
         />
       </ModalGenerico>
 
-      <ModalGenerico
-        visible={juegoTerminado}
-        onClose={() => {}}
-      >
+      <ModalGenerico visible={juegoTerminado} onClose={() => {}}>
         <View style={{ alignItems: "center", gap: 15 }}>
-          <Texto style={{ fontSize: 18, color: colors.blanco, textAlign: "center" }}>
+          <Texto
+            style={{ fontSize: 18, color: colors.blanco, textAlign: "center" }}
+          >
             ¡Se acabaron tus vidas!
           </Texto>
 
@@ -231,19 +251,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   imagen: {
-    width: 300,
-    height: 200,
+    width: "90%",
+    height: 300,
     marginBottom: 20,
     resizeMode: "cover",
-    backgroundColor: "white",
   },
   palabra: {
     fontSize: 28,
     color: colors.blanco,
-    backgroundColor: "grey",
+    backgroundColor: colors.grisOscuro,
     paddingHorizontal: 10,
     marginVertical: 20,
-    letterSpacing: 4,
+    letterSpacing: 2,
   },
   modal: {
     flex: 1,

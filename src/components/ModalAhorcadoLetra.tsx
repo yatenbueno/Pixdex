@@ -1,5 +1,5 @@
-import colors from "@/constants/Colors";
-import { Texto } from "@/constants/FuenteProvider";
+import colors from "@/src/common/constants/Colors";
+import { Texto } from "@/src/common/constants/FuenteProvider";
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Boton from "./Boton";

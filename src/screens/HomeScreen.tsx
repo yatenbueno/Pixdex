@@ -1,12 +1,11 @@
-import { CajaCategoriaFlatList } from "@/components/CajaCategoriaFlatList";
-import { CajaIndicadoraAcciones } from "@/components/CajaIndicadoraAcciones";
-import { CajaJuegos } from "@/components/CajaJuegos";
-import { ContenidoList } from "@/components/ContenidoList";
-import colors from "@/constants/Colors";
-import { useFiltrarContenido } from "@/hooks/useFiltrarContenido";
-import { contenidosAudiovisuales } from "@/src/data/contenidosAudiovisuales";
-import { useState } from "react";
+import colors from "@/src/common/constants/Colors";
+import { CajaCategoriaFlatList } from "@/src/components/CajaCategoriaFlatList";
+import { CajaIndicadoraAcciones } from "@/src/components/CajaIndicadoraAcciones";
+import { CajaJuegos } from "@/src/components/CajaJuegos";
+import { ContenidoList } from "@/src/components/ContenidoList";
+import { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { AudiovisualesContext } from "../context/audiovisual-context";
 import { FiltrosSeleccionados } from "../types/Filtros";
 
 export function HomeScreen() {
@@ -15,12 +14,18 @@ export function HomeScreen() {
     tiposSeleccionados: [],
     generosSeleccionados: [],
   });
+  const { tipos, generos } = useContext(AudiovisualesContext);
+  const [tiposSeleccionados, setTiposSeleccionados] = useState<number[]>([
+    1, 2, 3,
+  ]);
+  const [generosSeleccionados, setGenerosSeleccionados] = useState<number[]>(
+    []
+  );
+  const mostrarTipos =
+    tiposSeleccionados.length > 0
+      ? tipos.filter((t) => tiposSeleccionados.includes(t.id))
+      : tipos;
 
-  const filtrados = useFiltrarContenido(contenidosAudiovisuales, filtros);
-
-  const series = filtrados.filter((c) => c.tipoId === 1);
-  const peliculas = filtrados.filter((c) => c.tipoId === 2);
-  const anime = filtrados.filter((c) => c.tipoId === 3);
   return (
     <ScrollView style={[styles.screenContainer]}>
       <View style={styles.mainContent}>
@@ -32,6 +37,8 @@ export function HomeScreen() {
             setFiltros={setFiltros}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            setTiposSeleccionados={setTiposSeleccionados}
+            setGenerosSeleccionados={setGenerosSeleccionados}
           />
         </View>
 
@@ -56,15 +63,14 @@ export function HomeScreen() {
         </View>
       </View>
 
-      <CajaCategoriaFlatList text="SERIES">
-        <ContenidoList contenidos={series} />
-      </CajaCategoriaFlatList>
-      <CajaCategoriaFlatList text="PELICULAS">
-        <ContenidoList contenidos={peliculas} />
-      </CajaCategoriaFlatList>
-      <CajaCategoriaFlatList text="ANIME">
-        <ContenidoList contenidos={anime} />
-      </CajaCategoriaFlatList>
+      {mostrarTipos.map((tipo) => (
+        <CajaCategoriaFlatList key={tipo.id} text={tipo.plural}>
+          <ContenidoList
+            tipoId={tipo.id}
+            generosFiltrados={generosSeleccionados}
+          />
+        </CajaCategoriaFlatList>
+      ))}
     </ScrollView>
   );
 }

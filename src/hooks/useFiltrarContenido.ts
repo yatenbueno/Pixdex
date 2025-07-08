@@ -15,10 +15,7 @@ type Filtros = {
   generosSeleccionados: number[];
 };
 
-export function useFiltrarContenido(
-  contenidos: Contenido[],
-  filtros: Filtros
-) {
+export function useFiltrarContenido(contenidos: Contenido[], filtros: Filtros) {
   const filtrados = useMemo(() => {
     return contenidos.filter((contenido) => {
       const coincideTipo =
@@ -27,9 +24,7 @@ export function useFiltrarContenido(
 
       const coincideGenero =
         filtros.generosSeleccionados.length === 0 ||
-        contenido.generos.some((g) =>
-          filtros.generosSeleccionados.includes(g)
-        );
+        contenido.generos.some((g) => filtros.generosSeleccionados.includes(g));
 
       return coincideTipo && coincideGenero;
     });

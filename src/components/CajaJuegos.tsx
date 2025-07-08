@@ -1,4 +1,4 @@
-import colors from "@/constants/Colors";
+import colors from "@/src/common/constants/Colors";
 import { ROUTES } from "@/src/navigation/routes";
 import { Link } from "expo-router";
 import React from "react";

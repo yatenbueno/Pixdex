@@ -1,5 +1,5 @@
-import colors from "@/constants/Colors";
-import { Texto } from "@/constants/FuenteProvider";
+import colors from "@/src/common/constants/Colors";
+import { Texto } from "@/src/common/constants/FuenteProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { StyleSheet, TextStyle, View, ViewStyle } from "react-native";

@@ -1,13 +1,8 @@
-import colors from '@/constants/Colors';
-import { Texto } from '@/constants/FuenteProvider';
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Boton from './Boton';
+import colors from "@/src/common/constants/Colors";
+import { Texto } from "@/src/common/constants/FuenteProvider";
+import React, { useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import Boton from "./Boton";
 
 type AhorcadoProps = {
   onStart: (valor: string) => void;
@@ -17,9 +12,15 @@ type AhorcadoProps = {
   valorDefault?: string;
 };
 
-const ModalAhorcado = ({ onStart, texto, textoBoton, placeHolder, valorDefault = "" }: AhorcadoProps) => {
+const ModalAhorcado = ({
+  onStart,
+  texto,
+  textoBoton,
+  placeHolder,
+  valorDefault = "",
+}: AhorcadoProps) => {
   const [valor, setValor] = useState(valorDefault);
-  
+
   const handlePress = () => {
     if (valor.trim()) {
       onStart(valor.trim());
@@ -72,8 +73,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   boton: {
-    alignSelf: "flex-end"
-  }
+    alignSelf: "flex-end",
+  },
 });
 
 export default ModalAhorcado;

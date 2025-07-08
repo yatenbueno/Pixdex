@@ -1,6 +1,7 @@
-import colors from "@/constants/Colors";
+import colors from "@/src/common/constants/Colors";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Texto } from "../common/constants/FuenteProvider";
 
 type CajaCategoriaFlatListProps = {
   text: string;
@@ -14,13 +15,11 @@ function CajaCategoriaFlatList({ text, children }: CajaCategoriaFlatListProps) {
       <View style={styles.borderedBox}>
         {/* Título flotante */}
         <View style={styles.titleWrapper}>
-          <Text style={styles.title}>{text}</Text>
+          <Texto style={styles.title}>{text.toUpperCase()}</Texto>
         </View>
 
         {/* Contenido dentro (ej. FlatList) */}
-        <View style={styles.innerContent}>
-          {children}
-        </View>
+        <View style={styles.innerContent}>{children}</View>
       </View>
     </View>
   );
@@ -65,4 +64,3 @@ const styles = StyleSheet.create({
 });
 
 export { CajaCategoriaFlatList };
-

@@ -1,7 +1,9 @@
-import colors from "@/constants/Colors";
-import { generosContenidoAudiovisual } from "@/src/data/generosContenidoAudiovisual";
+import colors from "@/src/common/constants/Colors";
+import { AudiovisualesContext } from "@/src/context/audiovisual-context";
 import { ImageBackground } from "expo-image";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Etiqueta from "./Etiqueta";
 
 type TContenidoCardProps = {
   id: number;
@@ -17,9 +19,13 @@ export function ContenidoCard({
   generos,
   imageUrl,
 }: TContenidoCardProps) {
+  const context = useContext(AudiovisualesContext);
+  if (!context) return null;
+  const { generos: generosContext } = context;
+
   // Buscar nombres de géneros por ID
   const generosNombre = generos
-    .map((id) => generosContenidoAudiovisual.find((g) => g.id === id)?.nombre)
+    .map((id) => generosContext.find((g) => g.id === id)?.nombre)
     .filter(Boolean); // elimina undefined si algún ID no existe
 
   return (
@@ -38,9 +44,7 @@ export function ContenidoCard({
         </Text>
         <View style={styles.genreContainer}>
           {generosNombre.map((genero, index) => (
-            <View key={index} style={styles.genreTag}>
-              <Text style={styles.genreText}>{genero}</Text>
-            </View>
+            <Etiqueta key={index} texto={genero ?? ""} />
           ))}
         </View>
       </View>

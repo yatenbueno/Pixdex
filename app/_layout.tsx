@@ -1,35 +1,17 @@
-import colors from "@/constants/Colors";
-import { FuenteProvider, Texto } from "@/constants/FuenteProvider";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import { SafeAreaView, StatusBar } from "react-native";
-import "react-native-reanimated";
+import { Initializer } from "@/src/components/Initializer";
+import { AudiovisualesContextProvider } from "@/src/context/audiovisual-context";
+import { RootLayout } from "@/src/layouts/RootLayout";
+import { useState } from "react";
 
-export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    PixelFont: require("@/assets/fonts/PressStart2P-Regular.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return (
-      <Texto style={{ color: "#fff", backgroundColor: colors.fondo }}>
-        Cargando...
-      </Texto>
-    );
-  }
-
+export default function () {
+  const [appReady, setAppReady] = useState(false);
   return (
-    <FuenteProvider>
-      <SafeAreaView style={{ flex:1, marginTop: StatusBar.currentHeight}}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: {
-              backgroundColor: colors.fondo,
-            },
-          }}
-        />
-      </SafeAreaView>
-    </FuenteProvider>
+    <AudiovisualesContextProvider>
+      {!appReady ? (
+        <Initializer onFinish={() => setAppReady(true)} />
+      ) : (
+        <RootLayout />
+      )}
+    </AudiovisualesContextProvider>
   );
 }
