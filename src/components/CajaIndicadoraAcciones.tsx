@@ -8,6 +8,7 @@ import ModalGenerico from "./ModalGenerico";
 type CajaIndicadoraAccionesProps = {
   text: string;
   filtros: FiltrosSeleccionados;
+  iconSize? : number;
   setFiltros: (filtros: FiltrosSeleccionados) => void;
   modalVisible: boolean;
   setTiposSeleccionados: (tipos: number[]) => void;
@@ -18,6 +19,7 @@ type CajaIndicadoraAccionesProps = {
 function CajaIndicadoraAcciones({
   text,
   filtros,
+  iconSize,
   setFiltros,
   modalVisible,
   setTiposSeleccionados,
@@ -29,9 +31,10 @@ function CajaIndicadoraAcciones({
       <Boton
         texto={text}
         icono="settings"
-        styleTexto={{ fontSize: 10 }}
+        styleTexto={{ fontSize: 6.5 }}
         styleContainer={{ paddingHorizontal: 4 }}
         styleIcon={{ marginRight: 6 }}
+        iconSize={iconSize}
       ></Boton>
       <ModalGenerico
         visible={modalVisible}

@@ -35,7 +35,7 @@ export default function Ahorcado() {
       <BotonBack />
 
       <View style={styles.borde}>
-        <Text style={styles.slugTitle}>Juego del ahorcado</Text>
+        <Text style={styles.slugTitle}>Juego del{'\n'}ahorcado</Text>
         <Text style={styles.description}>
           Adivina los títulos de shows de TV, películas y anime una letra a la
           vez. Tienes 5 vidas - ¿Podes obtener el puntaje máximo?
@@ -69,9 +69,8 @@ const styles = StyleSheet.create({
   },
   borde: {
     alignSelf: "center",
-    height: 790,
-    width: 390,
-    borderWidth: 3,
+    height: "90%",
+    borderWidth: 4,
     borderColor: colors.grisOscuro,
     marginTop: 30,
   },
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   description: {
-    color: "#fff",
+    color: colors.blanco,
     fontSize: 16,
     lineHeight: 20,
     marginBottom: 20,

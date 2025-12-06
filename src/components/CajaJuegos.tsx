@@ -14,22 +14,22 @@ function CajaJuegos({ backgroundColor, text, descripcion }: CajaJuegosProps) {
   return (
     <View style={styles.wrapper}>
       <View style={[styles.container, { backgroundColor }]}>
-        {/* Título */}
-        <View style={styles.titleContainer}>
+        {/*Título*/}
+        <View style={styles.headerRow}>
           <Text style={styles.title}>{text}</Text>
         </View>
 
-        {/* Descripción */}
-        <View style={styles.descriptionContainer}>
+        {/*Descripción*/}
+        <View style={styles.bodyRow}>
           <Text style={styles.description}>{descripcion}</Text>
         </View>
 
-        {/* Botón */}
-        <Link href={ROUTES.AHORCADO_INICIAL}>
-          <View style={styles.actionContainer}>
-            <Text style={styles.buttonText}>Jugar</Text>
-          </View>
-        </Link>
+        {/*Botón*/}
+        <View style={styles.footerRow}>
+          <Link href={ROUTES.AHORCADO_INICIAL}>
+            <Text style={styles.buttonText}>JUGAR</Text>
+          </Link>
+        </View>
       </View>
     </View>
   );
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     padding: 5,
+    paddingBottom: 10,
   },
   container: {
     flex: 1,
@@ -47,27 +48,39 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-between",
   },
-  titleContainer: {
+  headerRow: {
+    alignItems: "flex-start",
+    // marginBottom: 1,
+  },
+  bodyRow: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
+  },
+  footerRow: {
+    alignItems: "flex-end",
+    marginTop: 8,
   },
   title: {
-    fontSize: 14,
+    fontSize: 12,
     color: "white",
     fontFamily: "PixelFont",
-  },
-  descriptionContainer: {
-    flex: 2,
-    justifyContent: "center",
   },
   description: {
     color: "white",
     fontSize: 10,
+    paddingBottom: 6
   },
   actionContainer: {
     flex: 1,
     alignItems: "flex-end",
-    justifyContent: "flex-end",
+    justifyContent: "flex-end"
+  },
+  buttonContainer: {
+    backgroundColor: "rgba(0,0,0,0.2)",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.3)",
   },
   buttonText: {
     color: "white",
