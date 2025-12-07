@@ -17,6 +17,7 @@ import {
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false); // Switch entre Login y Registro
   const router = useRouter();
@@ -25,10 +26,22 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       if (isRegistering) {
-        // REGISTRO
+        // VALIDACIÓN
+        if (!username) {
+            Alert.alert("Error", "Debes ingresar un nombre de usuario");
+            setLoading(false);
+            return;
+        }
+
+        // REGISTRO CON METADATOS
         const { error } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            data: {
+              username: username,
+            },
+          },
         });
         if (error) throw error;
         Alert.alert("Éxito", "Usuario creado correctamente. Ya puedes iniciar sesión.");
@@ -67,6 +80,17 @@ export default function LoginScreen() {
           autoCapitalize="none"
           keyboardType="email-address"
         />
+
+        {isRegistering && (
+          <TextInput
+            style={styles.input}
+            placeholder="Nombre de usuario (Alias)"
+            placeholderTextColor="#aaa"
+            value={username}
+            onChangeText={setUsername}
+            autoCapitalize="none"
+          />
+        )}
         
         <TextInput
           style={styles.input}
