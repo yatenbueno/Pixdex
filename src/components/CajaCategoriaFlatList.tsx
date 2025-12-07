@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     /*esto es para que no haya espacio entre 
       el fin de la carta y el fin de la caja bordeada de
       la flatlist */
-    marginBottom: -25,
+    marginBottom: 15,
   },
 });
 

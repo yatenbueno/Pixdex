@@ -6,6 +6,7 @@ import { contenidosAudiovisuales } from "@/src/data/contenidosAudiovisuales";
 import { useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ImageBackground } from "expo-image";
 
 export default function ContenidoSlugRoute() {
   const { slug } = useLocalSearchParams();
@@ -26,7 +27,12 @@ export default function ContenidoSlugRoute() {
         <BotonBack />
         <View style={styles.borde}>
           <View style={styles.imagePlaceholder}>
-            <Text style={{ color: "#000", textAlign: "center" }}>{slug}</Text>
+            {/* <Text style={{ color: "#000", textAlign: "center" }}>{slug}</Text> */}
+            <ImageBackground
+              source={{ uri: contenido?.imageUrl }}
+              style={styles.image}
+              imageStyle={styles.imageInner}
+            />
           </View>
 
           <Text style={styles.slugTitle}>{contenido?.nombre}</Text>
@@ -55,17 +61,25 @@ const styles = StyleSheet.create({
   },
   borde: {
     alignSelf: "center",
-    width: "95%",
+    width: "100%",
     borderWidth: 3,
     borderColor: colors.grisOscuro,
     marginTop: 30,
     paddingBottom: 20,
   },
+  image: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageInner: {
+    resizeMode: "cover",
+  },
   imagePlaceholder: {
-    height: 450,
+    height: 400,
     width: "90%",
-    marginLeft: 20,
-    marginTop: 20,
+    marginLeft: 15,
+    marginTop: 15,
     backgroundColor: "#BEBEBE",
     marginBottom: 20,
     justifyContent: "center",
@@ -79,7 +93,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   description: {
-    color: "#fff",
+    color: colors.blanco,
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 20,
