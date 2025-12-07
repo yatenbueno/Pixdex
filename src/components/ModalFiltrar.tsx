@@ -44,6 +44,11 @@ const ModalFiltrar = ({ onCancelar, onAplicar, filtrosIniciales }: Props) => {
     );
   };
 
+  const resetear = () => {
+    setTiposSeleccionados([]);
+    setGenerosSeleccionados([]);
+  };
+
   const aplicar = () => {
     onAplicar({ tiposSeleccionados, generosSeleccionados });
   };
@@ -80,10 +85,10 @@ const ModalFiltrar = ({ onCancelar, onAplicar, filtrosIniciales }: Props) => {
 
       <View style={styles.botones}>
         <TouchableOpacity
-          onPress={onCancelar}
+          onPress={resetear}
           style={[styles.boton, styles.cancelar]}
         >
-          <Texto style={styles.textoBoton}>CANCELAR</Texto>
+          <Texto style={styles.textoBoton}>RESETEAR</Texto>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={aplicar}
