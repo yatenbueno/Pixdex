@@ -8,41 +8,38 @@ export interface IContenidoAudiovisual {
 }
 
 export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
+  // --- SERIES ---
   {
     id: 1,
     nombre: "Breaking Bad",
-    descripcion:
-      "Un profesor de química se convierte en fabricante de metanfetaminas.",
+    descripcion: "Un profesor de química se convierte en fabricante de metanfetaminas.",
     generos: [1, 3, 10],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg",
   },
   {
     id: 2,
     nombre: "Stranger Things",
-    descripcion:
-      "Un grupo de niños se enfrenta a fuerzas sobrenaturales en su ciudad.",
+    descripcion: "Un grupo de niños se enfrenta a fuerzas sobrenaturales en su ciudad.",
     generos: [1, 4, 8],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/cVxVGwHce6xnW8UaVUggaPXbmoE.jpg",
   },
   {
     id: 3,
     nombre: "Friends",
-    descripcion:
-      "Seis amigos viven las altas y bajas de la vida en Nueva York.",
+    descripcion: "Seis amigos viven las altas y bajas de la vida en Nueva York.",
     generos: [2, 1],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/f496cm9enuEsZkSPzCwnTESEK5s.jpg",
   },
   {
     id: 4,
     nombre: "The Office",
-    descripcion:
-      "La vida cotidiana en una oficina de papel con mucho humor absurdo.",
+    descripcion: "La vida cotidiana en una oficina de papel con mucho humor absurdo.",
     generos: [2],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/dg9e5fPRRId8PoBE0F6jl5y85Eu.jpg",
   },
   {
     id: 5,
@@ -50,25 +47,23 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Familias nobles luchan por el control de los Siete Reinos.",
     generos: [1, 6, 5],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
   },
   {
     id: 6,
     nombre: "The Mandalorian",
-    descripcion:
-      "Un cazarrecompensas viaja por la galaxia protegiendo a un misterioso niño.",
+    descripcion: "Un cazarrecompensas viaja por la galaxia protegiendo a un misterioso niño.",
     generos: [4, 5, 11],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg",
   },
   {
     id: 7,
     nombre: "Dark",
-    descripcion:
-      "Desapariciones en un pueblo alemán revelan oscuros secretos temporales.",
+    descripcion: "Desapariciones en un pueblo alemán revelan oscuros secretos temporales.",
     generos: [8, 1, 4],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg",
   },
   {
     id: 8,
@@ -76,7 +71,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Dramatización de la vida de la reina Isabel II.",
     generos: [1, 15],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/1DDE0Z2Y805rqfkEjPbZsMLyPwa.jpg",
   },
   {
     id: 9,
@@ -84,16 +79,15 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Una moderna adaptación de Sherlock Holmes.",
     generos: [8, 1],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/7WTsnHkbA0FaG6R9twfFde0I9hl.jpg",
   },
   {
     id: 10,
     nombre: "The Boys",
-    descripcion:
-      "Un grupo busca exponer los crímenes de superhéroes corruptos.",
+    descripcion: "Un grupo busca exponer los crímenes de superhéroes corruptos.",
     generos: [3, 11, 10],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
   },
   {
     id: 11,
@@ -101,7 +95,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "El origen del abogado de Breaking Bad.",
     generos: [1, 10],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/fC2HDm5t0kHl7mTm7jxMR31b7by.jpg",
   },
   {
     id: 12,
@@ -109,16 +103,15 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un hombre cuenta a sus hijos cómo conoció a su madre.",
     generos: [2, 9],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/b34jPzmB0wZy7EjUZoleXOl2RRI.jpg",
   },
   {
     id: 13,
     nombre: "The Witcher",
-    descripcion:
-      "Un cazador de monstruos lucha por encontrar su lugar en un mundo brutal.",
+    descripcion: "Un cazador de monstruos lucha por encontrar su lugar en un mundo brutal.",
     generos: [5, 6, 1],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/7vjaCdMw15FEbXyLQTVa04URsPm.jpg",
   },
   {
     id: 14,
@@ -126,16 +119,15 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un político ambicioso trama su camino hacia el poder.",
     generos: [1, 10],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/hKWxWjFwnMvkWQawbhvC0Y7ygQ8.jpg",
   },
   {
     id: 15,
     nombre: "Peaky Blinders",
-    descripcion:
-      "Una familia criminal británica después de la Primera Guerra Mundial.",
+    descripcion: "Una familia criminal británica después de la Primera Guerra Mundial.",
     generos: [1, 3, 15],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg",
   },
   {
     id: 16,
@@ -143,7 +135,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Antología que explora el lado oscuro de la tecnología.",
     generos: [4, 10],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/seN6rRfN0I6n8iDXjlSMk1QjNcq.jpg",
   },
   {
     id: 17,
@@ -151,25 +143,23 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Adolescentes enfrentan amor, adicciones y traumas.",
     generos: [1, 9],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/3Q0hd3heuWwDWpwcDkhQOA6TYWI.jpg",
   },
   {
     id: 18,
     nombre: "Succession",
-    descripcion:
-      "Una familia millonaria lucha por el control del imperio mediático.",
+    descripcion: "Una familia millonaria lucha por el control del imperio mediático.",
     generos: [1, 10],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/z0XiwdrCQ9yVIr4O0pxzaAYRxdW.jpg",
   },
   {
     id: 19,
     nombre: "Lost",
-    descripcion:
-      "Supervivientes de un accidente aéreo intentan sobrevivir en una isla misteriosa.",
+    descripcion: "Supervivientes de un accidente aéreo intentan sobrevivir en una isla misteriosa.",
     generos: [5, 8],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/og6S0aTZU6YUJAbqxeKjCa3kY1E.jpg",
   },
   {
     id: 20,
@@ -177,15 +167,17 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Una pandemia convierte a la humanidad en monstruos.",
     generos: [3, 4, 1],
     tipoId: 1,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/dmo6TYuuJgaYinXBPjrgG9mB5od.jpg",
   },
+
+  // --- PELÍCULAS ---
   {
     id: 21,
     nombre: "Inception",
     descripcion: "Un ladrón entra en los sueños de otros para robar secretos.",
     generos: [4, 10, 1],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
   },
   {
     id: 22,
@@ -193,7 +185,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un hacker descubre la verdad sobre su realidad simulada.",
     generos: [4, 3],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
   },
   {
     id: 23,
@@ -201,7 +193,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Historias entrelazadas de crimen en Los Ángeles.",
     generos: [1, 2, 10],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
   },
   {
     id: 24,
@@ -209,7 +201,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un amor trágico a bordo del famoso barco.",
     generos: [1, 9, 15],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg",
   },
   {
     id: 25,
@@ -217,25 +209,23 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Batman enfrenta al temible Joker en Ciudad Gótica.",
     generos: [3, 11, 10],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
   },
   {
     id: 26,
     nombre: "Forrest Gump",
-    descripcion:
-      "Un hombre simple vive momentos clave de la historia de EE.UU.",
+    descripcion: "Un hombre simple vive momentos clave de la historia de EE.UU.",
     generos: [1, 2, 15],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
   },
   {
     id: 27,
     nombre: "Interstellar",
-    descripcion:
-      "Astronautas viajan a través de un agujero de gusano para salvar a la humanidad.",
+    descripcion: "Astronautas viajan a través de un agujero de gusano para salvar a la humanidad.",
     generos: [4, 1, 5],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
   },
   {
     id: 28,
@@ -243,7 +233,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un hombre crea un club de lucha secreto que cambia su vida.",
     generos: [1, 10],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
   },
   {
     id: 29,
@@ -251,7 +241,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un general romano busca venganza como gladiador.",
     generos: [3, 15, 1],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg",
   },
   {
     id: 30,
@@ -259,7 +249,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "La historia de una poderosa familia mafiosa.",
     generos: [1, 10, 15],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
   },
   {
     id: 31,
@@ -267,25 +257,23 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Los Vengadores enfrentan la batalla final contra Thanos.",
     generos: [3, 11, 4],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/bR8ISy1O9XQxqiy0fQFw2BX72RQ.jpg",
   },
   {
     id: 32,
     nombre: "Parasite",
-    descripcion:
-      "Una familia pobre se infiltra en la vida de una familia rica.",
+    descripcion: "Una familia pobre se infiltra en la vida de una familia rica.",
     generos: [1, 10],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/4DGPORlVIDIQvsuSDnM4uXKMjWS.jpg",
   },
   {
     id: 33,
     nombre: "La La Land",
-    descripcion:
-      "Una historia de amor entre un pianista y una actriz en Los Ángeles.",
+    descripcion: "Una historia de amor entre un pianista y una actriz en Los Ángeles.",
     generos: [2, 9],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg",
   },
   {
     id: 34,
@@ -293,7 +281,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "El origen del famoso villano de Gotham.",
     generos: [1, 10],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
   },
   {
     id: 35,
@@ -301,7 +289,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un escritor pierde la cordura en un hotel aislado.",
     generos: [7, 10],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/uAR0AWqhQL1hQa69UDEbb2rE5Wx.jpg",
   },
   {
     id: 36,
@@ -309,53 +297,49 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Los juguetes cobran vida cuando nadie los ve.",
     generos: [2, 5, 6],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg",
   },
   {
     id: 37,
     nombre: "Schindler's List",
-    descripcion:
-      "La historia de un hombre que salvó a cientos de judíos durante el Holocausto.",
+    descripcion: "La historia de un hombre que salvó a cientos de judíos durante el Holocausto.",
     generos: [1, 15],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
   },
   {
     id: 38,
     nombre: "Spirited Away",
-    descripcion:
-      "Una niña entra en un mundo espiritual para salvar a sus padres.",
+    descripcion: "Una niña entra en un mundo espiritual para salvar a sus padres.",
     generos: [6, 5, 1],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
   },
   {
     id: 39,
     nombre: "The Silence of the Lambs",
-    descripcion:
-      "Una agente del FBI busca la ayuda de un asesino para atrapar a otro.",
+    descripcion: "Una agente del FBI busca la ayuda de un asesino para atrapar a otro.",
     generos: [8, 10, 7],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/1yQR4iUb5ChImcZ0yDsE18TpiaU.jpg",
   },
   {
     id: 40,
     nombre: "Coco",
-    descripcion:
-      "Un niño viaja al mundo de los muertos para descubrir su herencia familiar.",
+    descripcion: "Un niño viaja al mundo de los muertos para descubrir su herencia familiar.",
     generos: [6, 15, 2],
     tipoId: 2,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/6Ryitt95xrO8KXuqRGm1fUuNwqF.jpg",
   },
 
-  // ANIME
+  // --- ANIME ---
   {
     id: 41,
     nombre: "Naruto",
     descripcion: "Un joven ninja busca convertirse en el líder de su aldea.",
     generos: [13, 5, 6],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/xppeysfvDKVx775MFuH8Z9BlpMk.jpg",
   },
   {
     id: 42,
@@ -363,7 +347,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Humanos luchan por sobrevivir contra titanes gigantes.",
     generos: [3, 10, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/hTP1DtLGFamjfu8WqjnuQdP1n4i.jpg",
   },
   {
     id: 43,
@@ -371,7 +355,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Piratas buscan el tesoro legendario llamado One Piece.",
     generos: [5, 6, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/cMD9Ygz11zjJzAovURpO75Qg7rT.jpg",
   },
   {
     id: 44,
@@ -379,7 +363,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un estudiante obtiene un cuaderno con el poder de matar.",
     generos: [8, 10, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/tCZFfYTIwrR7n94J6G14Y4hAFU6.jpg",
   },
   {
     id: 45,
@@ -387,16 +371,15 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Dos hermanos alquimistas buscan la Piedra Filosofal.",
     generos: [5, 6, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/5ZFUEOULaVml7pQuXxhpR2SmVUw.jpg",
   },
   {
     id: 46,
     nombre: "My Hero Academia",
-    descripcion:
-      "En un mundo con superpoderes, un chico sin dones quiere ser héroe.",
+    descripcion: "En un mundo con superpoderes, un chico sin dones quiere ser héroe.",
     generos: [11, 13, 3],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/phuYuzqWW9ru8EA3HVjE9W2Rr3M.jpg",
   },
   {
     id: 47,
@@ -404,7 +387,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un joven caza demonios tras perder a su familia.",
     generos: [3, 6, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/xUfRZu2mi8jH6SzQEJGP6tjBuYj.jpg",
   },
   {
     id: 48,
@@ -412,7 +395,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Estudiantes de hechicería luchan contra maldiciones.",
     generos: [3, 6, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/fHpKWq9ayzSk8nSwqRuaAUemRKh.jpg",
   },
   {
     id: 49,
@@ -420,34 +403,31 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Guerreros protegen la Tierra de amenazas cósmicas.",
     generos: [3, 13, 6],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/i1lMlxir5E4jyeLlqS2bK1Cn3Tt.jpg",
   },
   {
     id: 50,
     nombre: "Cowboy Bebop",
-    descripcion:
-      "Cazarrecompensas viajan por el espacio enfrentando su pasado.",
+    descripcion: "Cazarrecompensas viajan por el espacio enfrentando su pasado.",
     generos: [4, 5, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/xDiXDfZwC6XYC6fxHI1jl3A3Ill.jpg",
   },
   {
     id: 51,
     nombre: "Tokyo Ghoul",
-    descripcion:
-      "Un estudiante se transforma en mitad ghoul tras un accidente.",
+    descripcion: "Un estudiante se transforma en mitad ghoul tras un accidente.",
     generos: [7, 10, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/1m4RlC9BTCbyY549TOdVQ5NRPcR.jpg",
   },
   {
     id: 52,
     nombre: "Bleach",
-    descripcion:
-      "Un joven obtiene poderes para luchar contra espíritus malignos.",
+    descripcion: "Un joven obtiene poderes para luchar contra espíritus malignos.",
     generos: [3, 6, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/2EewmxXe72ogD0EaWM8gqa0ccIw.jpg",
   },
   {
     id: 53,
@@ -455,7 +435,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un grupo descubre cómo enviar mensajes al pasado.",
     generos: [4, 10, 8],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/5zxePQEsUKLYDh2kpXGQAeInjUU.jpg",
   },
   {
     id: 54,
@@ -463,7 +443,7 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un joven psíquico intenta vivir una vida normal.",
     generos: [2, 11, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/vR7hwaGQ0ySRoq1WobiNRaPs4WO.jpg",
   },
   {
     id: 55,
@@ -471,16 +451,15 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Un equipo de voleibol lucha por llegar a la cima.",
     generos: [12, 1, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/8WEr48swcqe89Zsy5sdrGCASlIg.jpg",
   },
   {
     id: 56,
     nombre: "Clannad",
-    descripcion:
-      "Un estudiante problemático cambia su vida al conocer a una chica especial.",
+    descripcion: "Un estudiante problemático cambia su vida al conocer a una chica especial.",
     generos: [1, 9, 12],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/jPBMYp4ddXkGJDSxxmaKBjzv2r3.jpg",
   },
   {
     id: 57,
@@ -488,16 +467,15 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Adolescentes pilotan mechas para salvar al mundo.",
     generos: [14, 4, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/y2ah9t0navXyIvoHg1uIbIHO3tt.jpg",
   },
   {
     id: 58,
     nombre: "Code Geass",
-    descripcion:
-      "Un joven obtiene un poder para controlar la voluntad de los demás.",
+    descripcion: "Un joven obtiene un poder para controlar la voluntad de los demás.",
     generos: [14, 10, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/x316WCogkeIwNY4JR8zTCHbI2nQ.jpg",
   },
   {
     id: 59,
@@ -505,15 +483,14 @@ export const contenidosAudiovisuales: IContenidoAudiovisual[] = [
     descripcion: "Jugadores quedan atrapados en un juego de realidad virtual.",
     generos: [4, 5, 13],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://www.themoviedb.org/t/p/w1280/9m8bFIXPg26taNrFSXGwEORVACD.jpg",
   },
   {
     id: 60,
     nombre: "Your Name",
-    descripcion:
-      "Dos adolescentes intercambian cuerpos y se conectan a través del tiempo.",
+    descripcion: "Dos adolescentes intercambian cuerpos y se conectan a través del tiempo.",
     generos: [9, 6, 4],
     tipoId: 3,
-    imageUrl: "https://place-hold.it/400x600",
+    imageUrl: "https://image.tmdb.org/t/p/w500/vfJFJPepRKapMd5G2ro7klIRysq.jpg",
   },
 ];
