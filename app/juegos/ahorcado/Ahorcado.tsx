@@ -6,9 +6,10 @@ import ModalLetra from "@/src/components/ModalAhorcadoLetra";
 import ModalAhorcado from "@/src/components/ModalAhorcadoNombre";
 import ModalGenerico from "@/src/components/ModalGenerico";
 import { AudiovisualesContext } from "@/src/context/audiovisual-context";
+import { AuthContext } from "@/src/context/auth-context";
 import { IContenidoAudiovisual } from "@/src/data/contenidosAudiovisuales";
+import { supabase } from "@/src/lib/supabase";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -21,44 +22,48 @@ import {
 } from "react-native";
 
 export default function Ahorcado() {
-  const [modalAdivinarNombreVisible, setModalAdivinarNombreVisible] =
-    useState(false);
+  const { session } = useContext(AuthContext);
+  const router = useRouter();
+
+  // --- OBTENCIÓN DEL NOMBRE ---
+  // Intentamos sacar el 'username' de la metadata (así se suele guardar al registrarse).
+  // Si no existe, usamos la parte del email antes del @.
+  const nombreUsuarioReal = 
+    session?.user?.user_metadata?.username || 
+    session?.user?.user_metadata?.full_name ||
+    session?.user?.email?.split('@')[0] || 
+    "Jugador";
+
+  // Estados del juego
+  const [modalAdivinarNombreVisible, setModalAdivinarNombreVisible] = useState(false);
   const [modalLetraVisible, setModalLetraVisible] = useState(false);
   const [vidas, setVidas] = useState(5);
   const [puntos, setPuntos] = useState(0);
+  
+  // Estados de contenido
   const { contenidos } = useContext(AudiovisualesContext);
-  const [contenidoActual, setContenidoActual] =
-    useState<IContenidoAudiovisual | null>(null);
-  const [contenidosDisponibles, setContenidosDisponibles] = useState<
-    IContenidoAudiovisual[]
-  >([]);
-  const [letrasAdivinadas, setLetrasAdivinadas] = useState<Set<string>>(
-    new Set()
-  );
+  const [contenidoActual, setContenidoActual] = useState<IContenidoAudiovisual | null>(null);
+  const [contenidosDisponibles, setContenidosDisponibles] = useState<IContenidoAudiovisual[]>([]);
+  const [letrasAdivinadas, setLetrasAdivinadas] = useState<Set<string>>(new Set());
   const [juegoTerminado, setJuegoTerminado] = useState(false);
-  const [nombreJugador, setNombreJugador] = useState<string | null>(null);
-  const router = useRouter();
 
+  // 1. Effect para guardar puntaje al terminar
+  useEffect(() => {
+    if (juegoTerminado) {
+      guardarPuntaje();
+    }
+  }, [juegoTerminado]);
+
+  // 2. Effect para cargar contenidos iniciales
   useEffect(() => {
     if (contenidos.length > 0 && contenidosDisponibles.length === 0) {
       setContenidosDisponibles([...contenidos]);
     }
-
     // Solo llama cuando aún no hay contenido cargado
     if (contenidosDisponibles.length > 0 && !contenidoActual) {
       cargarContenidoNuevo();
     }
   }, [contenidos, contenidosDisponibles]);
-
-  useEffect(() => {
-    const obtenerNombre = async () => {
-      const nombre = await AsyncStorage.getItem("nombreJugador");
-      if (nombre) {
-        setNombreJugador(nombre);
-      }
-    };
-    obtenerNombre();
-  }, []);
 
   const cargarContenidoNuevo = () => {
     if (contenidosDisponibles.length === 0) {
@@ -126,6 +131,36 @@ export default function Ahorcado() {
     setModalAdivinarNombreVisible(false);
   };
 
+  // --- FUNCIÓN DE GUARDADO ---
+  const guardarPuntaje = async () => {
+    // 1. Verificación estricta de sesión
+    if (!session || !session.user) {
+      console.log("No hay sesión. No se guarda puntaje.");
+      return; 
+    }
+
+    try {
+      console.log(`Guardando: ${nombreUsuarioReal} (${puntos} pts)`);
+
+      const { error } = await supabase
+        .from('ahorcado_scores') 
+        .insert({ 
+          username: nombreUsuarioReal, // Usamos la variable directa calculada anteriormente
+          score: puntos,
+          user_id: session.user.id // Obligatorio para la base de datos
+        });
+
+      if (error) {
+        console.error("Error al guardar en Supabase:", error);
+      } else {
+        console.log("Puntaje guardado correctamente.");
+      }
+
+    } catch (err) {
+      console.error("Error de conexión:", err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -136,8 +171,9 @@ export default function Ahorcado() {
           ))}
         </View>
         <View>
+          {/* Mostramos el nombre derivado directamente */}
           <Text style={{ fontSize: 12, color: colors.blanco }}>
-            Player: {nombreJugador ?? "Sin nombre"}
+            Player: {nombreUsuarioReal}
           </Text>
           <Text style={{ fontSize: 12, color: colors.blanco }}>
             Score: {puntos}
@@ -182,7 +218,7 @@ export default function Ahorcado() {
         onClose={() => setModalLetraVisible(false)}
       >
         <ModalLetra
-          letrasUsadas={[...letrasAdivinadas]} // conveierto Set a array
+          letrasUsadas={[...letrasAdivinadas]} 
           onCancel={() => setModalLetraVisible(false)}
           onConfirm={(letra) => {
             adivinarLetra(letra);
@@ -230,12 +266,11 @@ const styles = StyleSheet.create({
   vidas: {
     flexDirection: "row",
     alignItems: "center",
-    // marginRight: 15,
   },
   borde: {
     alignContent: "center",
     height: 790,
-    width: 390,
+    width: "95%",
     borderWidth: 3,
     borderColor: colors.grisOscuro,
     marginTop: 30,
