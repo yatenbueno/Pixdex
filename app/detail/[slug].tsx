@@ -1,12 +1,13 @@
 import colors from "@/src/common/constants/Colors";
 import { BotonBack } from "@/src/components/BotonBack";
+import { ContenedorBorde } from "@/src/components/ContenedorBorde";
 import Etiqueta from "@/src/components/Etiqueta";
 import { AudiovisualesContext } from "@/src/context/audiovisual-context";
 import { contenidosAudiovisuales } from "@/src/data/contenidosAudiovisuales";
+import { ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { ImageBackground } from "expo-image";
 
 export default function ContenidoSlugRoute() {
   const { slug } = useLocalSearchParams();
@@ -25,9 +26,13 @@ export default function ContenidoSlugRoute() {
     <ScrollView>
       <View style={styles.container}>
         <BotonBack />
-        <View style={styles.borde}>
+        <ContenedorBorde
+          noCentrar={true} 
+          style={{ 
+            marginTop: 30, 
+          }}
+        >
           <View style={styles.imagePlaceholder}>
-            {/* <Text style={{ color: "#000", textAlign: "center" }}>{slug}</Text> */}
             <ImageBackground
               source={{ uri: contenido?.imageUrl }}
               style={styles.image}
@@ -49,7 +54,7 @@ export default function ContenidoSlugRoute() {
               <Etiqueta key={index} texto={genero ?? ""} variant="detalle" />
             ))}
           </View>
-        </View>
+        </ContenedorBorde>
       </View>
     </ScrollView>
   );
@@ -58,14 +63,6 @@ export default function ContenidoSlugRoute() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-  },
-  borde: {
-    alignSelf: "center",
-    width: "100%",
-    borderWidth: 3,
-    borderColor: colors.grisOscuro,
-    marginTop: 30,
-    paddingBottom: 20,
   },
   image: {
     flex: 3,
