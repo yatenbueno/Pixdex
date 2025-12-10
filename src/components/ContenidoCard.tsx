@@ -1,8 +1,7 @@
 import colors from "@/src/common/constants/Colors";
 import { AudiovisualesContext } from "@/src/context/audiovisual-context";
-import { ImageBackground } from "expo-image";
-import { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useContext, useState } from 'react';
+import { ActivityIndicator, ImageBackground, StyleSheet, Text, View } from "react-native";
 import Etiqueta from "./Etiqueta";
 
 type TContenidoCardProps = {
@@ -20,13 +19,17 @@ export function ContenidoCard({
   imageUrl,
 }: TContenidoCardProps) {
   const context = useContext(AudiovisualesContext);
+  
+  // 1. Estado para controlar la carga de imagenes
+  const [cargando, setCargando] = useState(true);
+
   if (!context) return null;
   const { generos: generosContext } = context;
 
   // Buscar nombres de géneros por ID
   const generosNombre = generos
     .map((id) => generosContext.find((g) => g.id === id)?.nombre)
-    .filter(Boolean); // elimina undefined si algún ID no existe
+    .filter(Boolean);
 
   return (
     <View style={styles.card}>
@@ -35,9 +38,16 @@ export function ContenidoCard({
         source={{ uri: imageUrl }}
         style={styles.image}
         imageStyle={styles.imageInner}
-      />
+        // 2. Eventos para controlar el spinner
+        onLoadStart={() => setCargando(true)}
+        onLoadEnd={() => setCargando(false)}
+      >
+        {/* 3. Spinner condicional */}
+        {cargando && (
+          <ActivityIndicator size="small" color={colors.blanco || "white"} />
+        )}
+      </ImageBackground>
 
-      {/* Info abajo */}
       <View style={styles.info}>
         <Text style={styles.title} numberOfLines={1}>
           {nombre}
@@ -69,6 +79,7 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#1a1a1a",
   },
   imageInner: {
     resizeMode: "cover",
