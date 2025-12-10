@@ -3,31 +3,37 @@ import { IContenidoAudiovisual } from "@/src/data/contenidosAudiovisuales";
 import { IGeneroContenidoAudiovisual } from "@/src/data/generosContenidoAudiovisual";
 import { ITipoContenidoAudiovisual } from "@/src/data/tiposContenidoAudiovisual";
 
-export async function getContenidos(): Promise<IContenidoAudiovisual[]> {
-  const responseContenidos = await fetch(`${API_URL}/contenidos`);
-  if (!responseContenidos.ok) {
-    throw new Error("Error al obtener contenidos");
-  }
-  const contenidos: IContenidoAudiovisual[] = await responseContenidos.json();
-  return contenidos;
-}
+// Función auxiliar para simular demora
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function getTipos(): Promise<ITipoContenidoAudiovisual[]> {
-  const responseTipos = await fetch(`${API_URL}/tipos`);
-  if (!responseTipos.ok) {
-    throw new Error("Error al obtener tipos");
+export async function getContenidos(): Promise<IContenidoAudiovisual[]> {
+  await delay(1500); // Descomenta si quieres probar el loading
+  const response = await fetch(`${API_URL}/contenidos`);
+
+  if (!response.ok) {
+    throw new Error(`Error ${response.status} al obtener contenidos`);
   }
-  const tipos: ITipoContenidoAudiovisual[] = await responseTipos.json();
-  return tipos;
+
+  const data = await response.json();
+  return data;
 }
 
 export async function getGeneros(): Promise<IGeneroContenidoAudiovisual[]> {
-  const responseGeneros = await fetch(`${API_URL}/generos`);
-  if (!responseGeneros.ok) {
-    throw new Error("Error al obtener generos");
+  const response = await fetch(`${API_URL}/generos`);
+
+  if (!response.ok) {
+    throw new Error(`Error ${response.status} al obtener géneros`);
   }
-  const generos: IGeneroContenidoAudiovisual[] = await responseGeneros.json();
-  return generos;
+
+  return await response.json();
 }
 
-export type ITiposDict = Record<number, ITipoContenidoAudiovisual>;
+export async function getTipos(): Promise<ITipoContenidoAudiovisual[]> {
+  const response = await fetch(`${API_URL}/tipos`);
+
+  if (!response.ok) {
+    throw new Error(`Error ${response.status} al obtener tipos`);
+  }
+
+  return await response.json();
+}

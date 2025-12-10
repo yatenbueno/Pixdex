@@ -1,10 +1,8 @@
-import { ContenidoAudiovisual, contenidosAudiovisuales } from "@/src/data/contenidosAudiovisuales";
+import { IContenidoAudiovisual } from "@/src/data/contenidosAudiovisuales";
+import { getContenidos } from "./servicios";
 
-export const obtenerContenidoAleatorio = (): Promise<ContenidoAudiovisual> => {
-  return new Promise((resolve) => {
-    const indiceAleatorio = Math.floor(Math.random() * contenidosAudiovisuales.length);
-    setTimeout(() => {
-      resolve(contenidosAudiovisuales[indiceAleatorio]);
-    }, 500); // Simula delay de red
-  });
+export const obtenerContenidoAleatorio = async (): Promise<IContenidoAudiovisual> => {
+    const contenidos = await getContenidos(); // Llama a la API
+    const indice = Math.floor(Math.random() * contenidos.length);
+    return contenidos[indice];
 };
