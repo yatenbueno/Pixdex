@@ -27,7 +27,8 @@ const fetchScores = async () => {
         const { data, error } = await supabase
             .from('ranking_ahorcado_view') // Leemos la vista creada en Supabase
             .select('*')
-            .order('score', { ascending: false }); // Ordenamos por score
+            .order('score', { ascending: false }) // Ordenamos por score
+            .limit(10); // solo trae los 10 primeros (mejores)
 
         if (error) {
         console.error("Error fetching ranking:", error);
