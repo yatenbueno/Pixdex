@@ -28,6 +28,7 @@
 
        EXPO_PUBLIC_SUPABASE_URL={tu_project_url}
        EXPO_PUBLIC_SUPABASE_ANON_KEY={tu_anon_key}
+       EXPO_PUBLIC_API_URL=http://(tu_ip):8081
 
    3.4 Ingresar a "Project Settings" ubicado en la barra desplegable lateral izquierda de Supabase. 
    3.5 En la pestaña de Supabase en la barra desplegable lateral izquierda en el apartadado "Data API" se
@@ -35,7 +36,10 @@
    3.6 En la pestaña de Supabase en la barra desplegable lateral izquierda en el apartadado "API Keys"
        en la pestaña "Legacy anon, service_roleplay API Keys" se encuentra la clave para pegar en
        'EXPO_PUBLIC_SUPABASE_ANON_KEY'
-   3.7 En la pestaña de Supabase en la barra desplegable lateral izquierda en el apartadado "SQL Editor"
+   3.7 Ejecutar en una terminal (CMD/PowerShell/etc) el comando 'ipconfig'. La dirección ip a pegar en
+       'EXPO_PUBLIC_API_URL' se encuentra en "Dirección IPV4" en el apartado donde corre el servidor Expo.
+        (Por lo general es por Wi-Fi por el dispositivo que corres la app Expo Go)
+   3.8 En la pestaña de Supabase en la barra desplegable lateral izquierda en el apartadado "SQL Editor"
        pegar el siguiente código y apretar "Run":
 
        -- 1. Crear la Tabla (Donde se guardan todas las partidas)
