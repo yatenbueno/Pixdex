@@ -7,7 +7,7 @@ import { supabase } from "@/src/lib/supabase";
 import { ROUTES } from "@/src/navigation/routes";
 import { useRouter } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, ActivityIndicator, Pressable } from "react-native";
 
 // Tipo de dato para la tabla
 type ScoreData = {
@@ -20,17 +20,19 @@ export default function Ahorcado() {
   const router = useRouter();
   const { session } = useContext(AuthContext);
   const [puntajes, setPuntajes] = useState<ScoreData[]>([]);
+  const [cargando, setCargando] = useState(true);
 
   // Función para traer los datos
-const fetchScores = async () => {
+  const fetchScores = async () => {
     try {
-        const { data, error } = await supabase
-            .from('ranking_ahorcado_view') // Leemos la vista creada en Supabase
-            .select('*')
-            .order('score', { ascending: false }) // Ordenamos por score
-            .limit(10); // solo trae los 10 primeros (mejores)
+      setCargando(true);
+      const { data, error } = await supabase
+        .from("ranking_ahorcado_view") // Leemos la vista creada en Supabase
+        .select("*")
+        .order("score", { ascending: false }) // Ordenamos por score
+        .limit(10); // solo trae los 10 primeros (mejores)
 
-        if (error) {
+      if (error) {
         console.error("Error fetching ranking:", error);
       } else if (data) {
         setPuntajes(data);
@@ -38,9 +40,12 @@ const fetchScores = async () => {
     } catch (error) {
       console.error("Error:", error);
     }
-};
+    finally{
+      setCargando(false);
+    }
+  };
 
-useEffect(() => {
+  useEffect(() => {
     // 1. Carga inicial
     fetchScores();
 
@@ -50,11 +55,11 @@ useEffect(() => {
       .channel("ahorcado-scores-live")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "ahorcado_scores" }, 
+        { event: "*", schema: "public", table: "ahorcado_scores" },
         (payload) => {
           console.log("Alguien jugó una partida nueva!", payload);
           // Cuando la tabla base cambia, recargamos la vista
-          fetchScores(); 
+          fetchScores();
         }
       )
       .subscribe();
@@ -62,7 +67,7 @@ useEffect(() => {
     return () => {
       subscription.unsubscribe();
     };
-}, []);
+  }, []);
 
   const iniciarJuego = () => {
     router.push(ROUTES.AHORCADO);
@@ -71,7 +76,9 @@ useEffect(() => {
   const renderItem = ({ item, index }: { item: ScoreData; index: number }) => (
     <View style={styles.row}>
       <Texto style={styles.rank}>{index + 1}.</Texto>
-      <Texto style={styles.username} numberOfLines={1}>{item.username}</Texto>
+      <Texto style={styles.username} numberOfLines={1}>
+        {item.username}
+      </Texto>
       <Texto style={styles.score}>{item.score.toString()}</Texto>
     </View>
   );
@@ -79,7 +86,7 @@ useEffect(() => {
   return (
     <View style={styles.container}>
       <View style={{ marginBottom: 20 }}>
-         <BotonBack texto="BACK" />
+        <BotonBack texto="BACK" />
       </View>
 
       <View style={styles.borde}>
@@ -91,25 +98,30 @@ useEffect(() => {
         </Text>
 
         <View style={styles.buttonContainer}>
-             <Boton 
-                texto="INICIAR JUEGO" 
-                styleContainer={{ paddingHorizontal: 30, paddingVertical: 10 }}
-             />
-             <Texto 
-                onPress={iniciarJuego} 
-                style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0 }}
-             > </Texto>
+          <Pressable onPress={iniciarJuego}>
+            <Boton
+              texto="INICIAR JUEGO"
+              styleContainer={{ paddingHorizontal: 30, paddingVertical: 10 }}
+            />
+          </Pressable>
         </View>
 
         <Texto style={styles.subtitle}>Top Players</Texto>
 
         <View style={styles.tableContainer}>
-            {puntajes.length === 0 ? (
-                 <View style={styles.emptyState}>
+          {cargando ? (
+                // CASO A: Cargando -> Spinner
+                <View style={styles.centerContent}>
+                    <ActivityIndicator size="large" color={colors.verde} />
+                </View>
+            ) : puntajes.length === 0 ? (
+                // CASO B: Terminó de cargar y NO hay datos -> Mensaje vacío
+                 <View style={styles.centerContent}>
                     <Texto style={{color: '#888', fontSize: 10}}>Aún no hay puntuaciones.</Texto>
                     <Texto style={{color: '#888', fontSize: 10}}>¡Sé el primero!</Texto>
                  </View>
             ) : (
+                // CASO C: Terminó de cargar y SÍ hay datos -> Lista
                 <FlatList
                     data={puntajes}
                     renderItem={renderItem}
@@ -137,17 +149,17 @@ const styles = StyleSheet.create({
     borderColor: colors.grisOscuro,
     padding: 20,
     alignItems: "center",
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: "rgba(0,0,0,0.2)",
   },
   title: {
     fontSize: 18,
-    color: colors.purpuraClaro, 
+    color: colors.purpuraClaro,
     fontFamily: "PixelFont",
     textAlign: "center",
     marginBottom: 20,
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: {width: 2, height: 2},
-    textShadowRadius: 1
+    textShadowColor: "rgba(0,0,0,0.5)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 1,
   },
   description: {
     color: colors.blanco,
@@ -159,15 +171,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginBottom: 30,
-    position: 'relative'
+    position: "relative",
   },
   subtitle: {
     color: colors.verde,
     fontFamily: "PixelFont",
     fontSize: 14,
     marginBottom: 10,
-    textTransform: 'uppercase',
-    letterSpacing: 2
+    textTransform: "uppercase",
+    letterSpacing: 2,
   },
   tableContainer: {
     width: "100%",
@@ -175,7 +187,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.grisOscuro,
     height: 300,
-    borderRadius: 4
+    borderRadius: 4,
+  },
+  centerContent: {
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center'
   },
   row: {
     flexDirection: "row",
@@ -183,29 +200,29 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomColor: '#333',
-    paddingBottom: 4
+    borderBottomColor: "#333",
+    paddingBottom: 4,
   },
   rank: {
     color: "white",
     width: 30,
-    fontSize: 12
+    fontSize: 12,
   },
   username: {
     color: "white",
     flex: 1,
     fontSize: 12,
-    textAlign: "left"
+    textAlign: "left",
   },
   score: {
     color: colors.verde,
     fontSize: 12,
     fontWeight: "bold",
-    fontFamily: "PixelFont"
+    fontFamily: "PixelFont",
   },
   emptyState: {
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center'
-  }
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
